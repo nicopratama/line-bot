@@ -23,10 +23,9 @@ type TemplateType string
 
 // TemplateType constants
 const (
-	TemplateTypeButtons       TemplateType = "buttons"
-	TemplateTypeConfirm       TemplateType = "confirm"
-	TemplateTypeCarousel      TemplateType = "carousel"
-	TemplateTypeImageCarousel TemplateType = "image_carousel"
+	TemplateTypeButtons  TemplateType = "buttons"
+	TemplateTypeConfirm  TemplateType = "confirm"
+	TemplateTypeCarousel TemplateType = "carousel"
 )
 
 // TemplateActionType type
@@ -34,28 +33,9 @@ type TemplateActionType string
 
 // TemplateActionType constants
 const (
-	TemplateActionTypeURI            TemplateActionType = "uri"
-	TemplateActionTypeMessage        TemplateActionType = "message"
-	TemplateActionTypePostback       TemplateActionType = "postback"
-	TemplateActionTypeDatetimePicker TemplateActionType = "datetimepicker"
-)
-
-// ImageAspectRatioType type
-type ImageAspectRatioType string
-
-// ImageAspectRatioType constants
-const (
-	ImageAspectRatioTypeRectangle ImageAspectRatioType = "rectangle"
-	ImageAspectRatioTypeSquare    ImageAspectRatioType = "square"
-)
-
-// ImageSizeType type
-type ImageSizeType string
-
-// ImageSizeType constants
-const (
-	ImageSizeTypeCover   ImageSizeType = "cover"
-	ImageSizeTypeContain ImageSizeType = "contain"
+	TemplateActionTypeURI      TemplateActionType = "uri"
+	TemplateActionTypeMessage  TemplateActionType = "message"
+	TemplateActionTypePostback TemplateActionType = "postback"
 )
 
 // Template interface
@@ -66,44 +46,27 @@ type Template interface {
 
 // ButtonsTemplate type
 type ButtonsTemplate struct {
-	ThumbnailImageURL    string
-	ImageAspectRatio     ImageAspectRatioType
-	ImageSize            ImageSizeType
-	ImageBackgroundColor string
-	Title                string
-	Text                 string
-	Actions              []TemplateAction
+	ThumbnailImageURL string
+	Title             string
+	Text              string
+	Actions           []TemplateAction
 }
 
 // MarshalJSON method of ButtonsTemplate
 func (t *ButtonsTemplate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type                 TemplateType         `json:"type"`
-		ThumbnailImageURL    string               `json:"thumbnailImageUrl,omitempty"`
-		ImageAspectRatio     ImageAspectRatioType `json:"imageAspectRatio,omitempty"`
-		ImageSize            ImageSizeType        `json:"imageSize,omitempty"`
-		ImageBackgroundColor string               `json:"imageBackgroundColor,omitempty"`
-		Title                string               `json:"title,omitempty"`
-		Text                 string               `json:"text"`
-		Actions              []TemplateAction     `json:"actions"`
+		Type              TemplateType     `json:"type"`
+		ThumbnailImageURL string           `json:"thumbnailImageUrl"`
+		Title             string           `json:"title,omitempty"`
+		Text              string           `json:"text"`
+		Actions           []TemplateAction `json:"actions"`
 	}{
-		Type:                 TemplateTypeButtons,
-		ThumbnailImageURL:    t.ThumbnailImageURL,
-		ImageAspectRatio:     t.ImageAspectRatio,
-		ImageSize:            t.ImageSize,
-		ImageBackgroundColor: t.ImageBackgroundColor,
-		Title:                t.Title,
-		Text:                 t.Text,
-		Actions:              t.Actions,
+		Type:              TemplateTypeButtons,
+		ThumbnailImageURL: t.ThumbnailImageURL,
+		Title:             t.Title,
+		Text:              t.Text,
+		Actions:           t.Actions,
 	})
-}
-
-// WithImageOptions method, ButtonsTemplate can set imageAspectRatio, imageSize and imageBackgroundColor
-func (t *ButtonsTemplate) WithImageOptions(imageAspectRatio ImageAspectRatioType, imageSize ImageSizeType, imageBackgroundColor string) *ButtonsTemplate {
-	t.ImageAspectRatio = imageAspectRatio
-	t.ImageSize = imageSize
-	t.ImageBackgroundColor = imageBackgroundColor
-	return t
 }
 
 // ConfirmTemplate type
@@ -127,75 +90,32 @@ func (t *ConfirmTemplate) MarshalJSON() ([]byte, error) {
 
 // CarouselTemplate type
 type CarouselTemplate struct {
-	Columns          []*CarouselColumn
-	ImageAspectRatio ImageAspectRatioType
-	ImageSize        ImageSizeType
+	Columns []*CarouselColumn
 }
 
 // CarouselColumn type
 type CarouselColumn struct {
-	ThumbnailImageURL    string           `json:"thumbnailImageUrl,omitempty"`
-	ImageBackgroundColor string           `json:"imageBackgroundColor,omitempty"`
-	Title                string           `json:"title,omitempty"`
-	Text                 string           `json:"text"`
-	Actions              []TemplateAction `json:"actions"`
+	ThumbnailImageURL string           `json:"thumbnailImageUrl"`
+	Title             string           `json:"title,omitempty"`
+	Text              string           `json:"text"`
+	Actions           []TemplateAction `json:"actions"`
 }
 
 // MarshalJSON method of CarouselTemplate
 func (t *CarouselTemplate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
-		Type             TemplateType         `json:"type"`
-		Columns          []*CarouselColumn    `json:"columns"`
-		ImageAspectRatio ImageAspectRatioType `json:"imageAspectRatio,omitempty"`
-		ImageSize        ImageSizeType        `json:"imageSize,omitempty"`
+		Type    TemplateType      `json:"type"`
+		Columns []*CarouselColumn `json:"columns"`
 	}{
-		Type:             TemplateTypeCarousel,
-		Columns:          t.Columns,
-		ImageAspectRatio: t.ImageAspectRatio,
-		ImageSize:        t.ImageSize,
-	})
-}
-
-// WithImageOptions method, CarouselTemplate can set imageAspectRatio and imageSize
-func (t *CarouselTemplate) WithImageOptions(imageAspectRatio ImageAspectRatioType, imageSize ImageSizeType) *CarouselTemplate {
-	t.ImageAspectRatio = imageAspectRatio
-	t.ImageSize = imageSize
-	return t
-}
-
-// WithImageOptions method, CarouselColumn can set imageBackgroundColor
-func (t *CarouselColumn) WithImageOptions(imageBackgroundColor string) *CarouselColumn {
-	t.ImageBackgroundColor = imageBackgroundColor
-	return t
-}
-
-// ImageCarouselTemplate type
-type ImageCarouselTemplate struct {
-	Columns []*ImageCarouselColumn
-}
-
-// ImageCarouselColumn type
-type ImageCarouselColumn struct {
-	ImageURL string         `json:"imageUrl"`
-	Action   TemplateAction `json:"action"`
-}
-
-// MarshalJSON method of ImageCarouselTemplate
-func (t *ImageCarouselTemplate) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type    TemplateType           `json:"type"`
-		Columns []*ImageCarouselColumn `json:"columns"`
-	}{
-		Type:    TemplateTypeImageCarousel,
+		Type:    TemplateTypeCarousel,
 		Columns: t.Columns,
 	})
 }
 
 // implements Template interface
-func (*ConfirmTemplate) template()       {}
-func (*ButtonsTemplate) template()       {}
-func (*CarouselTemplate) template()      {}
-func (*ImageCarouselTemplate) template() {}
+func (*ConfirmTemplate) template()  {}
+func (*ButtonsTemplate) template()  {}
+func (*CarouselTemplate) template() {}
 
 // NewConfirmTemplate function
 func NewConfirmTemplate(text string, left, right TemplateAction) *ConfirmTemplate {
@@ -206,7 +126,6 @@ func NewConfirmTemplate(text string, left, right TemplateAction) *ConfirmTemplat
 }
 
 // NewButtonsTemplate function
-// `thumbnailImageURL` and `title` are optional. they can be empty.
 func NewButtonsTemplate(thumbnailImageURL, title, text string, actions ...TemplateAction) *ButtonsTemplate {
 	return &ButtonsTemplate{
 		ThumbnailImageURL: thumbnailImageURL,
@@ -224,28 +143,12 @@ func NewCarouselTemplate(columns ...*CarouselColumn) *CarouselTemplate {
 }
 
 // NewCarouselColumn function
-// `thumbnailImageURL` and `title` are optional. they can be empty.
 func NewCarouselColumn(thumbnailImageURL, title, text string, actions ...TemplateAction) *CarouselColumn {
 	return &CarouselColumn{
 		ThumbnailImageURL: thumbnailImageURL,
 		Title:             title,
 		Text:              text,
 		Actions:           actions,
-	}
-}
-
-// NewImageCarouselTemplate function
-func NewImageCarouselTemplate(columns ...*ImageCarouselColumn) *ImageCarouselTemplate {
-	return &ImageCarouselTemplate{
-		Columns: columns,
-	}
-}
-
-// NewImageCarouselColumn function
-func NewImageCarouselColumn(imageURL string, action TemplateAction) *ImageCarouselColumn {
-	return &ImageCarouselColumn{
-		ImageURL: imageURL,
-		Action:   action,
 	}
 }
 
@@ -315,42 +218,10 @@ func (a *PostbackTemplateAction) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// DatetimePickerTemplateAction type
-type DatetimePickerTemplateAction struct {
-	Label   string
-	Data    string
-	Mode    string
-	Initial string
-	Max     string
-	Min     string
-}
-
-// MarshalJSON method of DatetimePickerTemplateAction
-func (a *DatetimePickerTemplateAction) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&struct {
-		Type    TemplateActionType `json:"type"`
-		Label   string             `json:"label"`
-		Data    string             `json:"data"`
-		Mode    string             `json:"mode"`
-		Initial string             `json:"initial,omitempty"`
-		Max     string             `json:"max,omitempty"`
-		Min     string             `json:"min,omitempty"`
-	}{
-		Type:    TemplateActionTypeDatetimePicker,
-		Label:   a.Label,
-		Data:    a.Data,
-		Mode:    a.Mode,
-		Initial: a.Initial,
-		Max:     a.Max,
-		Min:     a.Min,
-	})
-}
-
 // implements TemplateAction interface
-func (*URITemplateAction) templateAction()            {}
-func (*MessageTemplateAction) templateAction()        {}
-func (*PostbackTemplateAction) templateAction()       {}
-func (*DatetimePickerTemplateAction) templateAction() {}
+func (*URITemplateAction) templateAction()      {}
+func (*MessageTemplateAction) templateAction()  {}
+func (*PostbackTemplateAction) templateAction() {}
 
 // NewURITemplateAction function
 func NewURITemplateAction(label, uri string) *URITemplateAction {
@@ -374,17 +245,5 @@ func NewPostbackTemplateAction(label, data, text string) *PostbackTemplateAction
 		Label: label,
 		Data:  data,
 		Text:  text,
-	}
-}
-
-// NewDatetimePickerTemplateAction function
-func NewDatetimePickerTemplateAction(label, data, mode, initial, max, min string) *DatetimePickerTemplateAction {
-	return &DatetimePickerTemplateAction{
-		Label:   label,
-		Data:    data,
-		Mode:    mode,
-		Initial: initial,
-		Max:     max,
-		Min:     min,
 	}
 }

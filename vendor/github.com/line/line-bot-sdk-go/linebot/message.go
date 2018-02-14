@@ -33,7 +33,7 @@ const (
 	MessageTypeImagemap MessageType = "imagemap"
 )
 
-// Message interface
+// Message inteface
 type Message interface {
 	json.Marshaler
 	message()
