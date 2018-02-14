@@ -15,6 +15,7 @@
 package linebot
 
 import (
+	"errors"
 	"io"
 	"net/http"
 	"net/url"
@@ -28,12 +29,26 @@ import (
 const (
 	APIEndpointBase = "https://api.line.me"
 
-	APIEndpointPushMessage       = "/v2/bot/message/push"
-	APIEndpointReplyMessage      = "/v2/bot/message/reply"
-	APIEndpointGetMessageContent = "/v2/bot/message/%s/content"
-	APIEndpointLeaveGroup        = "/v2/bot/group/%s/leave"
-	APIEndpointLeaveRoom         = "/v2/bot/room/%s/leave"
-	APIEndpointGetProfile        = "/v2/bot/profile/%s"
+	APIEndpointPushMessage           = "/v2/bot/message/push"
+	APIEndpointReplyMessage          = "/v2/bot/message/reply"
+	APIEndpointMulticast             = "/v2/bot/message/multicast"
+	APIEndpointGetMessageContent     = "/v2/bot/message/%s/content"
+	APIEndpointLeaveGroup            = "/v2/bot/group/%s/leave"
+	APIEndpointLeaveRoom             = "/v2/bot/room/%s/leave"
+	APIEndpointGetProfile            = "/v2/bot/profile/%s"
+	APIEndpointGetGroupMemberProfile = "/v2/bot/group/%s/member/%s"
+	APIEndpointGetRoomMemberProfile  = "/v2/bot/room/%s/member/%s"
+	APIEndpointGetGroupMemberIDs     = "/v2/bot/group/%s/members/ids"
+	APIEndpointGetRoomMemberIDs      = "/v2/bot/room/%s/members/ids"
+	APIEndpointCreateRichMenu        = "/v2/bot/richmenu"
+	APIEndpointGetRichMenu           = "/v2/bot/richmenu/%s"
+	APIEndpointListRichMenu          = "/v2/bot/richmenu/list"
+	APIEndpointDeleteRichMenu        = "/v2/bot/richmenu/%s"
+	APIEndpointGetUserRichMenu       = "/v2/bot/user/%s/richmenu"
+	APIEndpointLinkUserRichMenu      = "/v2/bot/user/%s/richmenu/%s"
+	APIEndpointUnlinkUserRichMenu    = "/v2/bot/user/%s/richmenu"
+	APIEndpointDownloadRichMenuImage = "/v2/bot/richmenu/%s/content" // Download: GET / Upload: POST
+	APIEndpointUploadRichMenuImage   = "/v2/bot/richmenu/%s/content" // Download: GET / Upload: POST
 )
 
 // Client type
@@ -49,6 +64,12 @@ type ClientOption func(*Client) error
 
 // New returns a new bot client instance.
 func New(channelSecret, channelToken string, options ...ClientOption) (*Client, error) {
+	if channelSecret == "" {
+		return nil, errors.New("missing channel secret")
+	}
+	if channelToken == "" {
+		return nil, errors.New("missing channel access token")
+	}
 	c := &Client{
 		channelSecret: channelSecret,
 		channelToken:  channelToken,
@@ -97,7 +118,6 @@ func (client *Client) url(endpoint string) string {
 }
 
 func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
-	req.Header.Set("X-LINE-ChannelToken", client.channelToken)
 	req.Header.Set("Authorization", "Bearer "+client.channelToken)
 	req.Header.Set("User-Agent", "LINE-BotSDK-Go/"+version)
 	if ctx != nil {
@@ -107,10 +127,13 @@ func (client *Client) do(ctx context.Context, req *http.Request) (*http.Response
 
 }
 
-func (client *Client) get(ctx context.Context, endpoint string) (*http.Response, error) {
+func (client *Client) get(ctx context.Context, endpoint string, query url.Values) (*http.Response, error) {
 	req, err := http.NewRequest("GET", client.url(endpoint), nil)
 	if err != nil {
 		return nil, err
+	}
+	if query != nil {
+		req.URL.RawQuery = query.Encode()
 	}
 	return client.do(ctx, req)
 }
@@ -121,5 +144,13 @@ func (client *Client) post(ctx context.Context, endpoint string, body io.Reader)
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	return client.do(ctx, req)
+}
+
+func (client *Client) delete(ctx context.Context, endpoint string) (*http.Response, error) {
+	req, err := http.NewRequest("DELETE", client.url(endpoint), nil)
+	if err != nil {
+		return nil, err
+	}
 	return client.do(ctx, req)
 }
