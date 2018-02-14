@@ -9,7 +9,7 @@ import (
 func StartRouting() {
 	router := gin.Default()
 
-	router.POST("/callback", controllers.Tes)
+	router.POST("/callback", controllers.Callback)
 
 	router.Run()
 }

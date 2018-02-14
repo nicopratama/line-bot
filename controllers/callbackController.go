@@ -7,7 +7,7 @@ import (
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
-func Tes(c *gin.Context) {
+func Callback(c *gin.Context) {
 	bot, err := linebot.New("06dfbfb76fef562140f6a5d949c45c6a", "4sp/TOv5oBk0NUToWxnYznPn+fY+JnV5Am17sRYPvgymi40sfL8C/kFxxhN6nhUrkaJ+GbBlSvABMeMyYWZpB0mYjke2kFUQZVbyDZK4fiJOeM6yabiOTOCNt+GEzYaHDsDJ4uyMyaxoOvVuK0Ob2QdB04t89/1O/w1cDnyilFU=")
 	if err != nil {
 		log.Fatal(err)
@@ -26,7 +26,7 @@ func Tes(c *gin.Context) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text+" tes")).Do(); err != nil {
 					log.Print(err)
 				}
 			}
