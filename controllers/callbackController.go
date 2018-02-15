@@ -27,11 +27,21 @@ func Callback(c *gin.Context) {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				{
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do()
+					switch message.Text {
+					case "Hai":
+						{
+							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Hai juga")).Do()
+						}
+					default:
+						{
+							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do()
+							return
+						}
+					}
 				}
 			default:
 				{
-
+					return
 				}
 			}
 		}
