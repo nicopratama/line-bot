@@ -30,12 +30,13 @@ func Callback(c *gin.Context) {
 					switch message.Text {
 					case "/daftar":
 						{
-							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Anda telah terdaftar")).Do()
+							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Anda telah terdaftar"), linebot.NewTextMessage("Halo kakak")).Do()
 						}
-					case "/help":
+					case "/profile":
 						{
-							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Ada yang bisa kita bantu?")).Do()
-							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(":)")).Do()
+							if err := HelpHandler(event.ReplyToken, event.Source); err != nil {
+								log.Print(err)
+							}
 						}
 					default:
 						{
@@ -51,4 +52,17 @@ func Callback(c *gin.Context) {
 			}
 		}
 	}
+}
+
+func HelpHandler(replyToken string, source *linebot.EventSource) error {
+	var bot *linebot.Client
+	template := linebot.NewConfirmTemplate(
+		"Do it ?",
+		linebot.NewMessageTemplateAction("Yes", "Alright !"),
+		linebot.NewMessageTemplateAction("No", "Naah..."),
+	)
+	if _, err := bot.ReplyMessage(replyToken, linebot.NewTemplateMessage("Confirm Template", template)).Do(); err != nil {
+		return err
+	}
+	return nil
 }
