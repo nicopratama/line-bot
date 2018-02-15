@@ -34,7 +34,7 @@ func Callback(c *gin.Context) {
 						}
 					case "/profile":
 						{
-							if err := HelpHandler(event.ReplyToken, event.Source); err != nil {
+							if err := HelpHandler(bot, event.ReplyToken, event.Source); err != nil {
 								log.Print(err)
 							}
 						}
@@ -54,14 +54,13 @@ func Callback(c *gin.Context) {
 	}
 }
 
-func HelpHandler(replyToken string, source *linebot.EventSource) error {
-	var bot *linebot.Client
-	template := linebot.NewConfirmTemplate(
-		"Do it ?",
-		linebot.NewMessageTemplateAction("Yes", "Alright !"),
-		linebot.NewMessageTemplateAction("No", "Naah..."),
-	)
-	if _, err := bot.ReplyMessage(replyToken, linebot.NewTemplateMessage("Confirm Template", template)).Do(); err != nil {
+func HelpHandler(bot *linebot.Client, replyToken string, source *linebot.EventSource) error {
+	// template := linebot.NewConfirmTemplate(
+	// 	"Do it ?",
+	// 	linebot.NewMessageTemplateAction("Yes", "Alright !"),
+	// 	linebot.NewMessageTemplateAction("No", "Naah..."),
+	// )
+	if _, err := bot.ReplyMessage(replyToken, linebot.NewTextMessage("Confirm Template")).Do(); err != nil {
 		return err
 	}
 	return nil
