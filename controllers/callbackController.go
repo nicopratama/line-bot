@@ -26,14 +26,12 @@ func Callback(c *gin.Context) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				switch message.Text {
-				case "hai":
-					{
-						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("hai juga"))
-					}
+				{
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do()
 				}
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text+" tes")).Do(); err != nil {
-					log.Print(err)
+			default:
+				{
+
 				}
 			}
 		}
