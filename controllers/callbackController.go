@@ -28,9 +28,14 @@ func Callback(c *gin.Context) {
 			case *linebot.TextMessage:
 				{
 					switch message.Text {
-					case "Hai":
+					case "/daftar":
 						{
-							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Hai juga")).Do()
+							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Anda telah terdaftar")).Do()
+						}
+					case "/help":
+						{
+							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Ada yang bisa kita bantu?")).Do()
+							bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(":)")).Do()
 						}
 					default:
 						{
