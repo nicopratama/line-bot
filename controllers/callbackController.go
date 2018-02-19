@@ -3,6 +3,7 @@ package controllers
 import (
 	"log"
 
+	"belajar/bot/handlers"
 	"belajar/bot/models"
 
 	"github.com/gin-gonic/gin"
@@ -11,18 +12,10 @@ import (
 
 func Callback(c *gin.Context) {
 	model := model.BotStruct{}
+	bot := model.Register()
 
-	bot, _ := model.Register()
+	events := handlers.CheckRequest(bot, c)
 
-	events, err := bot.ParseRequest(c.Request)
-	if err != nil {
-		if err == linebot.ErrInvalidSignature {
-			c.JSON(400, nil)
-		} else {
-			c.JSON(500, nil)
-		}
-		return
-	}
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
