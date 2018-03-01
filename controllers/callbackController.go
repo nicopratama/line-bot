@@ -22,7 +22,9 @@ func Callback(c *gin.Context) {
 					switch message.Text {
 					case "/daftar":
 						{
-
+							if err := handlers.RegisterHandler(bot, event.ReplyToken, event.Source); err != nil {
+								log.Print(err)
+							}
 						}
 					case "/profile":
 						{
