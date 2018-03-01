@@ -11,8 +11,8 @@ import (
 )
 
 func Callback(c *gin.Context) {
-	model := services.BotStruct{}
-	bot := services.Register()
+	botModel := services.BotStruct{}
+	bot := botModel.Register()
 	events := handlers.CheckRequest(bot, c)
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
