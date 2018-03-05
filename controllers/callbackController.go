@@ -13,15 +13,7 @@ import (
 
 func Callback(c *gin.Context) {
 	firestoreClient := services.RegisterFirestore()
-
-	// The app only has access as defined in the Security Rules
-	ref := firestoreClient.NewRef("/")
-	var data map[string]interface{}
-	if err := ref.Get(c, &data); err != nil {
-		log.Fatalln("Error reading from database:", err)
-	}
-	fmt.Println(data)
-
+	fmt.Println(firestoreClient)
 	botModel := services.BotStruct{}
 	bot := botModel.Register()
 	events := handlers.CheckRequest(bot, c)
