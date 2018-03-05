@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 
 	"belajar/bot/handlers"
@@ -11,8 +12,8 @@ import (
 )
 
 func Callback(c *gin.Context) {
-	// firestoreClient := services.RegisterFirestore()
-	// fmt.Println(firestoreClient)
+	firestoreClient := services.RegisterFirestore()
+	fmt.Println(firestoreClient)
 	botModel := services.BotStruct{}
 	bot := botModel.Register()
 	events := handlers.CheckRequest(bot, c)
