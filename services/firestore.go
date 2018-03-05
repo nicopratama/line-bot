@@ -24,7 +24,7 @@ func RegisterFirestore() *db.Client {
 		log.Fatalln("Error initializing database client:", err)
 	}
 
-	ref := client.NewRef("server/saving-data/fireblog")
+	ref := client.NewRef("tes")
 	type User struct {
 		DateOfBirth string `json:"date_of_birth,omitempty"`
 		FullName    string `json:"full_name,omitempty"`
