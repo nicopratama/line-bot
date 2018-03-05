@@ -11,6 +11,6 @@ func RegisterHandler(bot *linebot.Client, event *linebot.Event) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(res.DisplayName + " Anda telah terdaftar")).Do()
+	bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(res.DisplayName+" Anda telah terdaftar")).Do()
 	return nil
 }

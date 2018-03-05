@@ -3,6 +3,24 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "8pnf4BixJlUPjx/FEJfHhF6WUNQ=",
+			"path": "cloud.google.com/go",
+			"revision": "48539605f0fd577f22ef648b929c96045e803a2e",
+			"revisionTime": "2018-01-04T14:52:27Z"
+		},
+		{
+			"checksumSHA1": "8vOGEGtLBPJVBIlpXVfZ0s1ghTw=",
+			"path": "cloud.google.com/go/firestore",
+			"revision": "48539605f0fd577f22ef648b929c96045e803a2e",
+			"revisionTime": "2018-01-04T14:52:27Z"
+		},
+		{
+			"checksumSHA1": "NJChyMdMN/PTSJA/xDUuon6fJcQ=",
+			"path": "firebase.google.com/go",
+			"revision": "357ed718beef552a812ecbb11e08360bdd6ce144",
+			"revisionTime": "2018-02-28T21:29:48Z"
+		},
+		{
 			"path": "gin-gonic",
 			"revision": ""
 		},
