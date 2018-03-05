@@ -15,6 +15,12 @@
 			"revisionTime": "2018-01-04T14:52:27Z"
 		},
 		{
+			"checksumSHA1": "CHqHfte9w2Fz/0N6+O9KanjT3JA=",
+			"path": "cloud.google.com/go/firestore/apiv1beta1",
+			"revision": "48539605f0fd577f22ef648b929c96045e803a2e",
+			"revisionTime": "2018-01-04T14:52:27Z"
+		},
+		{
 			"checksumSHA1": "NJChyMdMN/PTSJA/xDUuon6fJcQ=",
 			"path": "firebase.google.com/go",
 			"revision": "357ed718beef552a812ecbb11e08360bdd6ce144",
