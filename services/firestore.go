@@ -12,7 +12,7 @@ import (
 func RegisterFirestore() *db.Client {
 	ctx := context.Background()
 	conf := &firebase.Config{
-		DatabaseURL: "https://line-quiz.firebaseio.com",
+		DatabaseURL: "https://line-quiz.firebaseio.com/.json?auth=DCsHyVBjSsYwyBEkw1QQ9OAbseVzgQwtAUVrHuqZ",
 	}
 	opt := option.WithCredentialsFile("./config/line-quiz.json")
 	app, err := firebase.NewApp(context.Background(), conf, opt)
