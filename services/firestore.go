@@ -11,7 +11,7 @@ import (
 
 func RegisterFirestore() *db.Client {
 	ctx := context.Background()
-	ao := map[string]interface{}{"uid": "my-service-worker"}
+	var ao map[string]interface{}
 	conf := &firebase.Config{
 		DatabaseURL:  "https://line-quiz.firebaseio.com",
 		AuthOverride: &ao,
