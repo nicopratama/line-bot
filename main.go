@@ -1,5 +1,7 @@
 package main
 
+import "belajar/bot/routing"
+
 func main() {
-	StartRouting()
+	routing.BootRouting()
 }
