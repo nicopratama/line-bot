@@ -1,4 +1,4 @@
-package main
+package routing
 
 import (
 	"belajar/bot/controllers"
@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func StartRouting() {
+func BootRouting() {
 	router := gin.Default()
 
 	router.POST("/callback", controllers.Callback)
