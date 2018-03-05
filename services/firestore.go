@@ -14,6 +14,7 @@ import (
 func RegisterFirestore() *db.Client {
 	ctx := context.Background()
 	conf := &firebase.Config{
+		ProjectID:   "line-quiz",
 		DatabaseURL: "https://line-quiz.firebaseio.com",
 	}
 	opt := option.WithCredentialsFile("./config/line-quiz.json")
