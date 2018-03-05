@@ -9,7 +9,7 @@ import (
 )
 
 func RegisterFirestore() *firebase.App {
-	opt := option.WithCredentialsFile("../config/line-quiz.json")
+	opt := option.WithCredentialsFile("path/to/serviceAccountKey.json")
 	app, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		log.Fatal(err)
