@@ -11,6 +11,7 @@ import (
 )
 
 func Callback(c *gin.Context) {
+	firestoreClient := services.RegisterFirestore()
 	botModel := services.BotStruct{}
 	bot := botModel.Register()
 	events := handlers.CheckRequest(bot, c)
