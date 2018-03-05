@@ -13,8 +13,9 @@ import (
 
 func Callback(c *gin.Context) {
 	firestoreClient := services.RegisterFirestore()
-	// As an admin, the app has access to read and write all data, regradless of Security Rules
-	ref := firestoreClient.NewRef("restricted_access/secret_document")
+
+	// The app only has access as defined in the Security Rules
+	ref := firestoreClient.NewRef("/public_resource")
 	var data map[string]interface{}
 	if err := ref.Get(c, &data); err != nil {
 		log.Fatalln("Error reading from database:", err)
