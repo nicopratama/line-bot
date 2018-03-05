@@ -24,5 +24,11 @@ func RegisterFirestore() *db.Client {
 		log.Fatalln("Error initializing database client:", err)
 	}
 
+	var tes map[string]interface{}
+	ref := client.NewRef("")
+	if err := ref.Get(ctx, &tes); err != nil {
+		log.Fatalln("Error reading value:", err)
+	}
+
 	return client
 }
