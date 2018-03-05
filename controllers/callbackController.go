@@ -13,7 +13,14 @@ import (
 
 func Callback(c *gin.Context) {
 	firestoreClient := services.RegisterFirestore()
-	fmt.Println(firestoreClient)
+	// As an admin, the app has access to read and write all data, regradless of Security Rules
+	ref := firestoreClient.NewRef("restricted_access/secret_document")
+	var data map[string]interface{}
+	if err := ref.Get(c, &data); err != nil {
+		log.Fatalln("Error reading from database:", err)
+	}
+	fmt.Println(data)
+
 	botModel := services.BotStruct{}
 	bot := botModel.Register()
 	events := handlers.CheckRequest(bot, c)
