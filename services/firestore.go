@@ -2,7 +2,6 @@ package services
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	firebase "firebase.google.com/go"
@@ -12,10 +11,8 @@ import (
 
 func RegisterFirestore() *db.Client {
 	ctx := context.Background()
-	var ao map[string]interface{}
 	conf := &firebase.Config{
-		DatabaseURL:  "https://line-quiz.firebaseio.com",
-		AuthOverride: &ao,
+		DatabaseURL: "https://line-quiz.firebaseio.com",
 	}
 	opt := option.WithCredentialsFile("./config/line-quiz.json")
 	app, err := firebase.NewApp(context.Background(), conf, opt)
@@ -30,8 +27,8 @@ func RegisterFirestore() *db.Client {
 	ref := client.NewRef("/line-quiz")
 	var data map[string]interface{}
 	if err := ref.Get(ctx, &data); err != nil {
+		log.Println(data)
 		log.Fatalln("Error reading from database:", err)
 	}
-	fmt.Println(data)
 	return client
 }
