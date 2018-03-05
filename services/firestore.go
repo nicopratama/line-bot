@@ -1,18 +1,20 @@
 package services
 
 import (
-	"context"
 	"log"
+
+	"golang.org/x/net/context"
 
 	firebase "firebase.google.com/go"
 	"firebase.google.com/go/db"
+
 	"google.golang.org/api/option"
 )
 
 func RegisterFirestore() *db.Client {
 	ctx := context.Background()
 	conf := &firebase.Config{
-		DatabaseURL: "https://line-quiz.firebaseio.com/.json?auth=DCsHyVBjSsYwyBEkw1QQ9OAbseVzgQwtAUVrHuqZ",
+		DatabaseURL: "https://line-quiz.firebaseio.com",
 	}
 	opt := option.WithCredentialsFile("./config/line-quiz.json")
 	app, err := firebase.NewApp(context.Background(), conf, opt)
