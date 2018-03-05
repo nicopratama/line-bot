@@ -25,11 +25,10 @@ func RegisterFirestore() *db.Client {
 	}
 
 	var tes map[string]interface{}
-	ref := client.NewRef("data")
+	ref := client.NewRef("/data")
 	if err := ref.Get(ctx, &tes); err != nil {
 		log.Fatalln("Error reading value:", err)
 	}
-	log.Printf("%s", &ref)
 
 	return client
 }
