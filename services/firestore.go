@@ -9,6 +9,7 @@ import (
 	"firebase.google.com/go/db"
 
 	"google.golang.org/api/option"
+	"fmt"
 )
 
 func RegisterFirestore() *db.Client {
@@ -27,11 +28,12 @@ func RegisterFirestore() *db.Client {
 		log.Fatalln("Error initializing database client:", err)
 	}
 
-	var tes map[string]interface{}
-	ref := client.NewRef("/data")
-	if err := ref.Get(ctx, &tes); err != nil {
-		log.Fatalln("Error reading value:", err)
+	ref := client.NewRef("restricted_access/secret_document")
+	var data map[string]interface{}
+	if err := ref.Get(ctx, &data); err != nil {
+		log.Fatalln("Error reading from database:", err)
 	}
+	fmt.Println(data)
 
 	return client
 }
