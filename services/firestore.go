@@ -18,7 +18,7 @@ func RegisterFirestore() *db.Client {
 		ProjectID:   "line-quiz",
 		DatabaseURL: "https://line-quiz.firebaseio.com",
 	}
-	opt := option.WithCredentialsFile("./config/line-quiz.json")
+	opt := option.WithCredentialsFile("./config/line-quiz-firebase-adminsdk-x7k1l-f532cb4e83.json")
 	app, err := firebase.NewApp(context.Background(), conf, opt)
 	if err != nil {
 		log.Fatal(err)
