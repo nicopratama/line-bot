@@ -28,7 +28,7 @@ func RegisterFirestore() *db.Client {
 		log.Fatalln("Error initializing database client:", err)
 	}
 
-	ref := client.NewRef("restricted_access/secret_document")
+	ref := client.NewRef("data")
 	var data map[string]interface{}
 	if err := ref.Get(ctx, &data); err != nil {
 		log.Fatalln("Error reading from database:", err)
